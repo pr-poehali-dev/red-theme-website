@@ -1,116 +1,142 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface Note {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: Date;
+}
 
 const Index = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const addNote = () => {
+    if (title.trim() && content.trim()) {
+      const newNote: Note = {
+        id: Date.now(),
+        title: title.trim(),
+        content: content.trim(),
+        createdAt: new Date(),
+      };
+      setNotes([newNote, ...notes]);
+      setTitle("");
+      setContent("");
+    }
+  };
+
+  const deleteNote = (id: number) => {
+    setNotes(notes.filter((note) => note.id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700"></div>
-        <div className="relative z-10 px-4 py-24 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="relative z-10 px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center animate-fade-in">
-            <h1 className="text-5xl font-bold text-white font-montserrat lg:text-7xl">
+            <h1 className="text-5xl font-bold text-white font-montserrat lg:text-6xl">
               Красный
-              <span className="block text-red-200">Дизайн</span>
+              <span className="block text-red-200">Блокнот</span>
             </h1>
             <p className="mt-6 text-xl text-red-100 max-w-3xl mx-auto">
-              Энергичный и современный сайт с красной цветовой схемой. Создан
-              для тех, кто любит яркие и смелые решения.
-            </p>
-            <div className="mt-10">
-              <button className="bg-white text-red-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-red-50 transition-all duration-300 transform hover:scale-105 animate-pulse-red">
-                Начать работу
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 -mt-4 -mr-16 w-32 h-32 bg-red-400 rounded-full opacity-20"></div>
-        <div className="absolute bottom-0 left-0 -mb-8 -ml-20 w-40 h-40 bg-red-500 rounded-full opacity-15"></div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 font-montserrat">
-            Возможности
-          </h2>
-          <p className="mt-4 text-xl text-gray-600">
-            Всё что нужно для успешного проекта
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Feature 1 */}
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-red-100 hover:shadow-xl transition-all duration-300 group">
-            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <span className="text-2xl">🎨</span>
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-4 font-montserrat">
-              Современный дизайн
-            </h3>
-            <p className="text-gray-600">
-              Красивые интерфейсы с использованием актуальных трендов и красной
-              цветовой палитры.
-            </p>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-red-100 hover:shadow-xl transition-all duration-300 group">
-            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <span className="text-2xl">⚡</span>
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-4 font-montserrat">
-              Высокая скорость
-            </h3>
-            <p className="text-gray-600">
-              Оптимизированная производительность и быстрая загрузка всех
-              элементов.
-            </p>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-red-100 hover:shadow-xl transition-all duration-300 group">
-            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <span className="text-2xl">📱</span>
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-4 font-montserrat">
-              Адаптивность
-            </h3>
-            <p className="text-gray-600">
-              Идеальное отображение на всех устройствах - от смартфонов до
-              десктопов.
+              Создавайте и управляйте своими записями в стильном красном
+              интерфейсе. Простой и удобный блокнот для ваших идей.
             </p>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 py-16">
-        <div className="text-center px-4 mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold text-white mb-4 font-montserrat">
-            Готовы начать?
-          </h2>
-          <p className="text-xl text-red-100 mb-8">
-            Присоединяйтесь к тысячам пользователей, которые уже оценили красоту
-            красного дизайна
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition-all duration-300">
-              Попробовать бесплатно
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-all duration-300">
-              Узнать больше
-            </button>
-          </div>
+      {/* Notes Section */}
+      <section className="py-12 px-4 mx-auto max-w-4xl sm:px-6 lg:px-8">
+        {/* Add Note Form */}
+        <Card className="mb-8 border-red-200 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-red-700 font-montserrat">
+              Добавить новую запись
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Input
+              placeholder="Заголовок записи..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="border-red-200 focus:ring-red-500"
+            />
+            <Textarea
+              placeholder="Содержание записи..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="min-h-[120px] border-red-200 focus:ring-red-500"
+            />
+            <Button
+              onClick={addNote}
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold"
+              disabled={!title.trim() || !content.trim()}
+            >
+              ✍️ Создать запись
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Notes List */}
+        <div className="space-y-4">
+          {notes.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">📝 Записей пока нет</p>
+              <p className="text-gray-400 mt-2">Создайте первую запись выше</p>
+            </div>
+          ) : (
+            notes.map((note) => (
+              <Card
+                key={note.id}
+                className="border-red-100 hover:shadow-lg transition-all duration-300"
+              >
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-gray-900 font-montserrat">
+                      {note.title}
+                    </CardTitle>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => deleteNote(note.id)}
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                    >
+                      🗑️
+                    </Button>
+                  </div>
+                  <p className="text-sm text-gray-500">
+                    {note.createdAt.toLocaleDateString("ru-RU", {
+                      day: "numeric",
+                      month: "long",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 whitespace-pre-wrap">
+                    {note.content}
+                  </p>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-12 mt-16">
         <div className="text-center px-4 mx-auto max-w-7xl">
           <h3 className="text-2xl font-bold mb-4 font-montserrat text-red-400">
-            Красный сайт
+            Красный блокнот
           </h3>
           <p className="text-gray-400 mb-8">Создано с ❤️ и красными красками</p>
           <div className="border-t border-gray-800 pt-8">
